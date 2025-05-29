@@ -5,7 +5,6 @@ class ChessBoard:
         self.TypeBoard = TypeBoard # 0 - прямоугольник, 1 - ромб
         self.SizeBoard = SizeBoard # Кол-во клеточек (обязательно из числа
                                    # должен извлекаться ровный квадратный корень)
-                                   # минимум 81
         self.Board = self.CreateBoard()
 
 
