@@ -37,8 +37,7 @@ class ChessBoard:
 
     def PrintBoard(self):
         """Печать доски"""
+        print()
         for i in self.Board:
             print(" ".join(map(str, i)))
-
-# Для проверки:
-#ChessBoard(1, 36).PrintBoard()
+        print()
