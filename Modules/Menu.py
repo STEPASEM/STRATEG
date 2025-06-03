@@ -1,3 +1,5 @@
+from ctypes.wintypes import POINT
+
 from Modules.СhessBoard import ChessBoard
 from Modules.Placement import Placement
 
@@ -30,13 +32,13 @@ Store_massage = (f'''========Магазин========
 class Menu:
     def __init__(self):
         self.Board = None
+        self.POINTS_USERS = [25, 25]
 
     def Start(self):
         """Запуск игры"""
         print(Hello_massage, end='')
         TypeBoard, SizeBoard = map(int, input().split())
         self.Board = self.ChoiceBoard(TypeBoard, SizeBoard)
-        print("Сейчас каждый из игроков поставит себе по 5 фигур\n")
         self.Store()
 
 
@@ -48,24 +50,25 @@ class Menu:
 
     def Store(self):
         """Вывод магазина для покупки фигур"""
-        POINTS = 25
-        while True:
-            print(Store_massage)
-            print(f'Баланс очков: {POINTS}\nНапишите номер фигуры которую хотите купить\n: ', end='')
-            type_figure = int(input())
-            match type_figure:
-                case 1:
-                    POINTS -= PRICE_FIGURE[0]
-                case 2:
-                    POINTS -= PRICE_FIGURE[1]
-                case 3:
-                    POINTS -= PRICE_FIGURE[2]
-                case 4:
-                    POINTS -= PRICE_FIGURE[3]
-                case 5:
-                    POINTS -= PRICE_FIGURE[4]
-                case 0:
-                    break
-                case _:
-                    print('\nНедостаточно очков или фигура введена неверно\n')
-            self.Board = Placement(self.Board, type_figure).place_figure()
+        for i in range(2):
+            print(f'\033[1mПокупает игрок {i+1}\033[0m \n')
+            while True:
+                print(Store_massage)
+                print(f'Баланс очков: {self.POINTS_USERS[i]}\nНапишите номер фигуры которую хотите купить\n: ', end='')
+                type_figure = int(input())
+                match type_figure:
+                    case 1:
+                        self.POINTS_USERS[i] -= PRICE_FIGURE[0]
+                    case 2:
+                        self.POINTS_USERS[i] -= PRICE_FIGURE[1]
+                    case 3:
+                        self.POINTS_USERS[i] -= PRICE_FIGURE[2]
+                    case 4:
+                        self.POINTS_USERS[i] -= PRICE_FIGURE[3]
+                    case 5:
+                        self.POINTS_USERS[i] -= PRICE_FIGURE[4]
+                    case 0:
+                        break
+                    case _:
+                        print('\nНедостаточно очков или фигура введена неверно\n')
+                self.Board = Placement(self.Board, type_figure).place_figure()
