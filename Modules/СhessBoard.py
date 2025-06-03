@@ -45,7 +45,7 @@ class ChessBoard:
 
     def PrintBoard(self):
         """Печать доски"""
-        print('  \033[1m', ' '.join(map(str, range(len(self.Board)))), '\033[0m')
+        print(f"  \033[31m{' '.join(map(str, range(len(self.Board))))}\033[0m")
         for i in range(len(self.Board)):
             row = []
             for j in range(len(self.Board[i])):
@@ -55,5 +55,5 @@ class ChessBoard:
                 elif (i, j) in self.players_figure[1]:
                     cell_value = f"\033[34m{cell_value}\033[0m"  # Синий (игрок 2)
                 row.append(cell_value)
-            print('\033[1m', i, " ".join(row), '\033[0m')
+            print(f"\033[31m{i}\033[0m {' '.join(row)}")
         print()
