@@ -1,8 +1,9 @@
 from math import sqrt
 
 class ChessBoard:
-    def __init__(self, TypeBoard: int, SizeBoard: int):
+    def __init__(self, TypeBoard: int, SizeBoard: int, players_figure: list[list[int]]):
         self.TypeBoard = TypeBoard # 0 - прямоугольник, 1 - ромб
+        self.players_figure = players_figure
         self.SizeBoard = SizeBoard # Кол-во клеточек (обязательно из числа
                                    # должен извлекаться ровный квадратный корень)
         self.Board = self.CreateBoard()
@@ -46,5 +47,13 @@ class ChessBoard:
         """Печать доски"""
         print('  \033[1m', ' '.join(map(str, range(len(self.Board)))), '\033[0m')
         for i in range(len(self.Board)):
-            print('\033[1m', i, " ".join(map(str, self.Board[i])), '\033[0m')
+            row = []
+            for j in range(len(self.Board[i])):
+                cell_value = str(self.Board[i][j])
+                if (i, j) in self.players_figure[0]:
+                    cell_value = f"\033[32m{cell_value}\033[0m"  # Зелёный (игрок 1)
+                elif (i, j) in self.players_figure[1]:
+                    cell_value = f"\033[34m{cell_value}\033[0m"  # Синий (игрок 2)
+                row.append(cell_value)
+            print('\033[1m', i, " ".join(row), '\033[0m')
         print()

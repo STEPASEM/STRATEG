@@ -45,7 +45,7 @@ class Menu:
 
     def ChoiceBoard(self, TypeBoard: int, SizeBoard: int) -> list:
         """Создание доски"""
-        Board = ChessBoard(TypeBoard, SizeBoard)
+        Board = ChessBoard(TypeBoard, SizeBoard, self.players_figure)
         Board.PrintBoard()
         return Board
 
