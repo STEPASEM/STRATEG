@@ -1,5 +1,4 @@
-from ctypes.wintypes import POINT
-
+from Modules.Movement import Movement
 from Modules.СhessBoard import ChessBoard
 from Modules.Placement import Placement
 
@@ -36,7 +35,8 @@ Store_massage = (f'''========Магазин========
 class Menu:
     def __init__(self):
         self.Board = None
-        self.POINTS_USERS = [25, 25]
+        self.players_current = {0: "\033[32m", 1: "\033[34m"}
+        self.POINTS_USERS = [10, 10]
         self.players_figure = [[],[]]
 
     def Start(self):
@@ -44,7 +44,9 @@ class Menu:
         print(Hello_massage, end='')
         TypeBoard, SizeBoard = map(int, input().split())
         self.Board = self.ChoiceBoard(TypeBoard, SizeBoard)
-        self.Store()
+        self.Store(0)
+        self.Store(1)
+        self.PlayGame()
 
 
     def ChoiceBoard(self, TypeBoard: int, SizeBoard: int) -> list:
@@ -53,14 +55,16 @@ class Menu:
         Board.PrintBoard()
         return Board
 
-    def Store(self):
+    def Store(self, i: int):
         """Вывод магазина для покупки фигур"""
-        for i in range(2):
-            print(f'\033[1mПокупает игрок {i+1}\033[0m \n')
-            while True:
-                print(Store_massage)
-                print(f'Баланс очков: {self.POINTS_USERS[i]}\nНапишите номер фигуры которую хотите купить\n: ', end='')
-                type_figure = int(input())
+        print(f'{self.players_current[i]}Покупает игрок {i+1}\033[0m \n')
+        while True:
+            print(Store_massage)
+            print(f'Баланс очков: {self.POINTS_USERS[i]}\nНапишите номер фигуры которую хотите купить\n: ', end='')
+            type_figure = int(input())
+            if PRICE_FIGURE[type_figure - 1] > self.POINTS_USERS[i] and (6 > type_figure > 0):
+                print('\nНедостаточно очков\n')
+            else:
                 match type_figure:
                     case 1:
                         self.POINTS_USERS[i] -= PRICE_FIGURE[0]
@@ -75,5 +79,19 @@ class Menu:
                     case 0:
                         break
                     case _:
-                        print('\nНедостаточно очков или фигура введена неверно\n')
+                        print('\nФигура введена неверно\n')
                 self.Board = Placement(self.Board, self.players_figure, type_figure, i).place_figure()
+
+    def PlayGame(self):
+        """Запуск игры"""
+        Movement(self.Board, self.players_figure, self.POINTS_USERS, PRICE_FIGURE, 0).MoveFigure()
+        Movement(self.Board, self.players_figure, self.POINTS_USERS, PRICE_FIGURE, 1).MoveFigure()
+        while True:
+            for i in range(2):
+                if self.POINTS_USERS[i] >= 2:
+                    self.Store(i)
+                while not Movement(self.Board, self.players_figure, self.POINTS_USERS, PRICE_FIGURE, i).MoveFigure():
+                    if self.POINTS_USERS[i] < 2:
+                        print(f'У вас нет денег!\n{self.players_current[i]}Игрок {i+1} проиграл!\033[0m')
+                        return True
+                    self.Store(i)
