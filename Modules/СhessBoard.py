@@ -34,10 +34,17 @@ class ChessBoard:
 
         return Board
 
+    def LengthBoard(self) -> int:
+        """Возвращает длину доски"""
+        return len(self.Board)
+
+    def GetBoard(self) -> list[list[int]]:
+        """Возвращает доску"""
+        return self.Board
 
     def PrintBoard(self):
         """Печать доски"""
-        print()
-        for i in self.Board:
-            print(" ".join(map(str, i)))
+        print('  \033[1m', ' '.join(map(str, range(len(self.Board)))), '\033[0m')
+        for i in range(len(self.Board)):
+            print('\033[1m', i, " ".join(map(str, self.Board[i])), '\033[0m')
         print()

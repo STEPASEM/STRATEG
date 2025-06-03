@@ -1,4 +1,5 @@
 from Modules.СhessBoard import ChessBoard
+from Modules.Placement import Placement
 
 PRICE_FIGURE =[2, 5, 5, 7, 10]
 
@@ -28,13 +29,14 @@ Store_massage = (f'''========Магазин========
 
 class Menu:
     def __init__(self):
-        pass
+        self.Board = None
 
-    def Hello(self):
-        """Пишет приветствие"""
+    def Start(self):
+        """Запуск игры"""
         print(Hello_massage, end='')
         TypeBoard, SizeBoard = map(int, input().split())
-        Board = self.ChoiceBoard(TypeBoard, SizeBoard)
+        self.Board = self.ChoiceBoard(TypeBoard, SizeBoard)
+        print("Сейчас каждый из игроков поставит себе по 5 фигур\n")
         self.Store()
 
 
@@ -50,7 +52,8 @@ class Menu:
         while True:
             print(Store_massage)
             print(f'Баланс очков: {POINTS}\nНапишите номер фигуры которую хотите купить\n: ', end='')
-            match int(input()):
+            type_figure = int(input())
+            match type_figure:
                 case 1:
                     POINTS -= PRICE_FIGURE[0]
                 case 2:
@@ -65,5 +68,4 @@ class Menu:
                     break
                 case _:
                     print('\nНедостаточно очков или фигура введена неверно\n')
-
-Menu().Hello()
+            self.Board = Placement(self.Board, type_figure).place_figure()
