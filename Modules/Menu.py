@@ -33,6 +33,7 @@ class Menu:
     def __init__(self):
         self.Board = None
         self.POINTS_USERS = [25, 25]
+        self.players_figure = [[],[]]
 
     def Start(self):
         """Запуск игры"""
@@ -71,4 +72,4 @@ class Menu:
                         break
                     case _:
                         print('\nНедостаточно очков или фигура введена неверно\n')
-                self.Board = Placement(self.Board, type_figure).place_figure()
+                self.Board = Placement(self.Board, self.players_figure, type_figure, i).place_figure()
