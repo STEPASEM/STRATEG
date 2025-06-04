@@ -36,7 +36,7 @@ class Menu:
     def __init__(self):
         self.Board = None
         self.players_current = {0: "\033[32m", 1: }
-        self.POINTS_USERS = [10, 10]
+        self.POINTS_USERS = [25, 25]
         self.players_figure = [[],[]]
 
     def Start(self):
