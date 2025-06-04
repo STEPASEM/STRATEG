@@ -30,12 +30,12 @@ Store_massage = (f'''========Магазин========
 5. Ферзь - 10 баллов
 
 0. Выход из Магазина
-''')
+''')"\033[34m"
 
 class Menu:
     def __init__(self):
         self.Board = None
-        self.players_current = {0: "\033[32m", 1: "\033[34m"}
+        self.players_current = {0: "\033[32m", 1: }
         self.POINTS_USERS = [10, 10]
         self.players_figure = [[],[]]
 
@@ -83,7 +83,7 @@ class Menu:
                 self.Board = Placement(self.Board, self.players_figure, type_figure, i).place_figure()
 
     def PlayGame(self):
-        """Запуск игры"""
+        """Запуск ходьбы"""
         Movement(self.Board, self.players_figure, self.POINTS_USERS, PRICE_FIGURE, 0).MoveFigure()
         Movement(self.Board, self.players_figure, self.POINTS_USERS, PRICE_FIGURE, 1).MoveFigure()
         while True:
