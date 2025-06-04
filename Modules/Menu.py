@@ -35,7 +35,7 @@ Store_massage = (f'''========Магазин========
 class Menu:
     def __init__(self):
         self.Board = None
-        self.players_current = {0: "\033[32m", 1: }
+        self.players_current = {0: "\033[32m", 1: "\033[34m"}
         self.POINTS_USERS = [25, 25]
         self.players_figure = [[],[]]
 
