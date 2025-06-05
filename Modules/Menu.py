@@ -92,6 +92,6 @@ class Menu:
                     self.Store(i)
                 while not Movement(self.Board, self.players_figure, self.POINTS_USERS, PRICE_FIGURE, i).MoveFigure():
                     if self.POINTS_USERS[i] < 2:
-                        print(f'У вас нет денег!\n{self.players_current[i]}Игрок {i+1} проиграл!\033[0m')
+                        print(f'{self.players_current[i]}У вас нет денег!\nИгрок {i+1} проиграл!\033[0m')
                         return True
                     self.Store(i)
